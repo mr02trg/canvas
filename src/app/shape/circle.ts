@@ -1,5 +1,7 @@
+
+// circle class
+
 import { IPosition } from '../models/IPosition';
-import { UpperCasePipe } from '@angular/common';
 
 export class Circle {
     private x = 0;
@@ -40,6 +42,8 @@ export class Circle {
         context.fill();
     }
 
+    // linear motion (no acceleration) effect 
+    // bounce off the screen
     update(canvas: HTMLCanvasElement) {
         const width = canvas.width;
         const height = canvas.height;
@@ -54,6 +58,32 @@ export class Circle {
         this.x += this.dx;
         this.y += this.dy;
         this.draw(canvas);
+    }
+
+    // simulate gravitational effect
+    gravityUpdate(canvas: HTMLCanvasElement) {
+        // gravity of 0.5
+        const gravity = 0.5;
+
+        // friction - amount of energy loss in speed everytime ball touchs ground
+        const friction = 0.95;
+
+        if (this.y + this.r >= canvas.height) {
+            this.dy = -this.dy * friction;
+        } else {
+            // acceleration
+            // velocity is increment/ accerlerate by gravity everytime the frame refresh
+            this.dy += gravity;
+        }
+
+        if (this.x + this.r >= canvas.width || this.x - this.r <= 0) {
+            this.dx = -this.dx;
+        }
+
+        this.y += this.dy;
+        this.x += this.dx;
+        this.draw(canvas);
+
     }
 
     grow(n: number) {
