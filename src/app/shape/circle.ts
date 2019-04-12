@@ -33,12 +33,24 @@ export class Circle {
         return pos;
     }
 
+    getRadius(): number {
+        return this.r;
+    }
+
+    setPos(newPos: IPosition, canvas: HTMLCanvasElement) {
+        this.x = newPos.x;
+        this.y = newPos.y
+
+        this.draw(canvas);
+    }
+
     draw(canvas: HTMLCanvasElement) {
         const context = canvas.getContext("2d");
         context.beginPath();
         context.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
         context.strokeStyle = this.color;
         context.stroke();
+        context.fillStyle = this.color;
         context.fill();
     }
 
